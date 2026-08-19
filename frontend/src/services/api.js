@@ -2,8 +2,7 @@
  * Central fetch wrapper. Reads the API base URL from Vite env
  * so it is configurable per environment (VITE_API_URL).
  */
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-
+const API_URL = import.meta.env.VITE_API_URL || 'https://digital-tax.onrender.com/api';
 function getToken() {
   return localStorage.getItem('dts_token');
 }
