@@ -1,0 +1,202 @@
+{
+  "info": {
+    "name": "Digital Tax Filing Support - API",
+    "description": "Complete API collection for the Digital Tax Filing Support for Small Businesses platform. Set the base_url and token variables in the collection's Variables tab or an environment.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:5000/api" },
+    { "key": "token", "value": "" },
+    { "key": "admin_token", "value": "" },
+    { "key": "service_id", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Business Owner\",\n  \"email\": \"test.user@example.com\",\n  \"password\": \"Password@123\",\n  \"confirmPassword\": \"Password@123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"demo.user@digitaltaxsupport.local\",\n  \"password\": \"Demo@1234\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@digitaltaxsupport.local\",\n  \"password\": \"ChangeMe@123\"\n}"
+            },
+            "description": "Change this password immediately after first login in any real deployment."
+          }
+        },
+        {
+          "name": "Get Profile (Me)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{base_url}}/auth/me"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{base_url}}/auth/logout"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Services (Public)",
+      "item": [
+        { "name": "Get All Services", "request": { "method": "GET", "url": "{{base_url}}/services" } },
+        { "name": "Search Services", "request": { "method": "GET", "url": "{{base_url}}/services?search=gst" } },
+        { "name": "Get Service Details", "request": { "method": "GET", "url": "{{base_url}}/services/{{service_id}}" } },
+        { "name": "Get Service Documents", "request": { "method": "GET", "url": "{{base_url}}/services/{{service_id}}/documents" } },
+        { "name": "Get Service Steps", "request": { "method": "GET", "url": "{{base_url}}/services/{{service_id}}/steps" } },
+        { "name": "Get Service FAQs", "request": { "method": "GET", "url": "{{base_url}}/services/{{service_id}}/faqs" } },
+        { "name": "Get All FAQs", "request": { "method": "GET", "url": "{{base_url}}/faqs" } },
+        { "name": "Get Tax Calendar", "request": { "method": "GET", "url": "{{base_url}}/tax-calendar" } }
+      ]
+    },
+    {
+      "name": "Feedback & Contact",
+      "item": [
+        {
+          "name": "Submit Feedback",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": "{{base_url}}/feedback",
+            "body": { "mode": "raw", "raw": "{\n  \"rating\": 5,\n  \"description\": \"Very helpful step-by-step guide.\",\n  \"service_id\": {{service_id}}\n}" }
+          }
+        },
+        {
+          "name": "Submit Contact Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": "{{base_url}}/contact",
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"test.user@example.com\",\n  \"description\": \"I need more information about GST registration.\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        { "name": "Dashboard Stats", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }], "url": "{{base_url}}/admin/dashboard" } },
+        { "name": "Get All Users", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }], "url": "{{base_url}}/admin/users" } },
+        { "name": "Get Login Activity", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }], "url": "{{base_url}}/admin/login-activity" } },
+        { "name": "Get All Services (Admin)", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }], "url": "{{base_url}}/admin/services" } },
+        {
+          "name": "Create Service",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "url": "{{base_url}}/admin/services",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Sample New Service\",\n  \"short_description\": \"A short description.\",\n  \"introduction\": \"Introduction text.\",\n  \"purpose\": \"Purpose text.\",\n  \"eligibility\": \"Eligibility text.\",\n  \"charges\": \"Fees may vary depending on the applicable service/process.\",\n  \"official_portal_name\": \"Official Portal\",\n  \"official_portal_url\": \"https://www.incometax.gov.in/\",\n  \"important_information\": \"Important info text.\",\n  \"final_information\": \"Final info text.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Service",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "url": "{{base_url}}/admin/services/{{service_id}}",
+            "body": { "mode": "raw", "raw": "{\n  \"short_description\": \"Updated short description.\"\n}" }
+          }
+        },
+        { "name": "Delete Service", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }], "url": "{{base_url}}/admin/services/{{service_id}}" } },
+        {
+          "name": "Add Service Step",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "url": "{{base_url}}/admin/services/{{service_id}}/steps",
+            "body": { "mode": "raw", "raw": "{\n  \"step_number\": 9,\n  \"step_title\": \"Additional Step\",\n  \"step_description\": \"Description of the additional step.\"\n}" }
+          }
+        },
+        {
+          "name": "Create FAQ",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "url": "{{base_url}}/admin/faqs",
+            "body": { "mode": "raw", "raw": "{\n  \"service_id\": {{service_id}},\n  \"category\": \"GST\",\n  \"question\": \"Sample question?\",\n  \"answer\": \"Sample answer.\"\n}" }
+          }
+        },
+        {
+          "name": "Create Tax Calendar Entry",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "url": "{{base_url}}/admin/tax-calendar",
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Sample Due Date\",\n  \"due_date\": \"2026-12-31\",\n  \"description\": \"Sample description.\",\n  \"status\": \"upcoming\"\n}" }
+          }
+        },
+        { "name": "Get Feedback (Admin)", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }], "url": "{{base_url}}/admin/feedback" } },
+        { "name": "Get Contact Requests", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{admin_token}}" }], "url": "{{base_url}}/admin/contact-requests" } },
+        {
+          "name": "Update Contact Request Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+            ],
+            "url": "{{base_url}}/admin/contact-requests/1",
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"in_progress\"\n}" }
+          }
+        }
+      ]
+    }
+  ]
+}
