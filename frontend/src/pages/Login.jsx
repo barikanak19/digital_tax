@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import loginTaxImg from '../assets/images/auth/login_tax.png';
 
 export default function Login() {
   const { login } = useAuth();
@@ -70,7 +71,7 @@ export default function Login() {
 
         <div className="auth-illustration" aria-hidden="true">
           <img
-            src={new URL(/* @vite-ignore */ '../assets/images/auth/login_tax.png', import.meta.url).href}
+            src={loginTaxImg}
             alt="Login illustration"
             style={{ width: '100%', height: 'auto', minHeight: 320, objectFit: 'contain' }}
             onError={(e) => {

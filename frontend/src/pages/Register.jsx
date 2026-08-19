@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import registerTaxImg from '../assets/images/auth/register_tax.png';
 
 export default function Register() {
   const { register } = useAuth();
@@ -84,7 +85,7 @@ export default function Register() {
 
         <div className="auth-illustration" aria-hidden="true">
           <img
-            src={new URL(/* @vite-ignore */ '../assets/images/auth/register_tax.png', import.meta.url).href}
+            src={registerTaxImg}
             alt="Register illustration"
             style={{ width: '100%', height: 'auto', minHeight: 320, objectFit: 'contain' }}
             onError={(e) => {
