@@ -632,11 +632,37 @@ function buildSeedSQL() {
   lines.push('');
 
   // --- Services ---
+  // Actual image filenames per folder (filesystem is the source of truth).
+  // Some folders use _intro/_step_01/_complete, others use numbered 1/2/3.
+  const IMAGE_FILENAMES = {
+    'advance-tax':              ['advance-tax_intro.png',                     'advance-tax_step_01.png',                     'advance-tax_complete.png'],
+    'business-tax-registration':['business-tax-registration_intro.png',       'business-tax-registration_step_01.png',       'business-tax-registration_complete.png'],
+    'gst-invoice':              ['gst-invoice_intro.png',                     'gst-invoice_step_01.png',                     'gst-invoice_complete.png'],
+    'gst-registration':         ['gst-registration_intro.png',                'gst-registration_step_01.png',                'gst-registration_complete.png'],
+    'gst-return-filing':        ['gst-return-filing_intro.png',               'gst-return-filing_step_01.png',               'gst-return-filing_complete.png'],
+    'income-expense':           ['income-expense_intro.png',                  'income-expense_step_01.png',                  'income-expense_complete.png'],
+    'income-tax':               ['income-tax_intro.png',                      'income-tax_step_01.png',                      'income-tax_complete.png'],
+    'pan-services':             ['pan-services_intro.png',                    'pan-services_step_01.png',                    'pan-services_complete.png'],
+    'tan-services':             ['tan-services_intro.png',                    'tan-services_step_01.png',                    'tan-services_complete.png'],
+    'tax-calendar':             ['tax-calendar_intro.png',                    'tax-calendar_step_01.png',                    'tax-calendar_complete.png'],
+    'tax-compliance':           ['tax-compliance_intro.png',                  'tax-compliance_step_01.png',                  'tax-compliance_complete.png'],
+    'tax-deduction':            ['tax-deducation1.png',                       'tax-deducation2.png',                         'tax-deducation3.png'],
+    'tax-document-management':  ['tax-document1.png',                         'tax-document2.png',                           'tax-document3.png'],
+    'tax-faq':                  ['tax-faq1.png',                              'tax-faq2.png',                                'tax-faq3.png'],
+    'tax-notice':               ['tax-notice1.png',                           'tax-notice2.png',                             'tax-notice3.png'],
+    'tax-payment-challan':      ['tax-payment1.png',                          'tax-payment2.png',                            'tax-payment3.png'],
+    'tax-refund':               ['tax-refund1.png',                           'tax-refund2.png',                             'tax-refund3.png'],
+    'tax-safety':               ['tax-safety1.png',                           'tax-safety2.png',                             'tax-safety3.png'],
+    'tds-filing':               ['tds-filling1.png',                          'tds-filling2.png',                            'tds-filling3.png'],
+    'tds-payment':              ['tds-payment1.png',                          'tds-payment2.png',                            'tsd-payment3.png'],
+  };
+
   SERVICES.forEach((svc, idx) => {
     const slug = slugify(svc.name);
-    const introImg = `services/${svc.folder}/${svc.folder.replace(/-/g, '_')}_intro.png`;
-    const midImg = `services/${svc.folder}/${svc.folder.replace(/-/g, '_')}_middle.png`;
-    const finalImg = `services/${svc.folder}/${svc.folder.replace(/-/g, '_')}_final.png`;
+    const fnames = IMAGE_FILENAMES[svc.folder] || [`${svc.folder}_intro.png`, `${svc.folder}_step_01.png`, `${svc.folder}_complete.png`];
+    const introImg = `services/${svc.folder}/${fnames[0]}`;
+    const midImg   = `services/${svc.folder}/${fnames[1]}`;
+    const finalImg = `services/${svc.folder}/${fnames[2]}`;
 
     lines.push(`-- Service ${idx + 1}: ${svc.name}`);
     lines.push(
