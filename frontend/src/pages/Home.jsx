@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import backImage from '../assets/images/backgrounds/back-image.jpeg';
 
 const WHY_CARDS = [
   { title: 'Simple Tax Guidance', desc: 'Clear, plain-language explanations of digital tax processes.' },
@@ -21,7 +22,10 @@ const HOW_IT_WORKS = [
 export default function Home() {
   return (
     <div>
-      <section style={{ background: 'linear-gradient(160deg, var(--color-navy-900), var(--color-navy-700))', color: '#fff' }}>
+      <section style={{
+        background: `linear-gradient(160deg, rgba(15,36,56,0.88), rgba(30,66,96,0.82)), url(${backImage}) center/cover no-repeat`,
+        color: '#fff',
+      }}>
         <div className="container section text-center">
           <h1 style={{ color: '#fff' }}>Digital Tax Filing Support for Small Businesses</h1>
           <p style={{ color: '#c7d3de', fontSize: '1.1rem', maxWidth: 640, margin: '0 auto 24px' }}>

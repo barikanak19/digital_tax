@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import registerTaxImg from '../assets/images/auth/register_tax.png';
+import registerTaxImg from '../assets/images/register/regi-image.jpeg';
 
 export default function Register() {
   const { register } = useAuth();

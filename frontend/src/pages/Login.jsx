@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import loginTaxImg from '../assets/images/auth/login_tax.png';
+import loginTaxImg from '../assets/images/login/log-image.jpeg';
 
 export default function Login() {
   const { login } = useAuth();

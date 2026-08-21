@@ -12,6 +12,7 @@ import SafetyTips from '../components/SafetyTips';
 import FeedbackForm from '../components/FeedbackForm';
 import LoadingState from '../components/LoadingState';
 import ErrorState from '../components/ErrorState';
+import { resolveImageSlug } from '../data/serviceImageMap';
 
 function Section({ title, children }) {
   return (
@@ -44,30 +45,8 @@ export default function ServiceDetails() {
 
   const { service, documents, steps, faqs } = data;
 
-  // Derive the image-folder slug from the service slug.
-  // DB slugs like "income-tax-filing" or "gst-invoice-and-e-invoicing" need
-  // to be mapped to image-folder slugs like "income-tax" or "gst-invoice".
-  // We use a lookup of known image-folder slugs.
-  const IMAGE_FOLDER_SLUGS = [
-    'advance-tax', 'business-tax-registration', 'gst-invoice', 'gst-registration',
-    'gst-return-filing', 'income-expense', 'income-tax', 'pan-services',
-    'tan-services', 'tax-calendar', 'tax-compliance', 'tax-deduction',
-    'tax-document-management', 'tax-faq', 'tax-notice', 'tax-payment-challan',
-    'tax-refund', 'tax-safety', 'tds-filing', 'tds-payment',
-  ];
-
-  // Explicit overrides for DB slugs that don't match the image-folder slug
-  // via the generic prefix logic below.
-  const SLUG_OVERRIDES = {
-    'income-and-expense-record-keeping': 'income-expense',
-    'tax-payment-and-challan':           'tax-payment-challan',
-  };
-
-  // Try explicit override first, then exact match, then best prefix/partial match
-  let imageSlug = SLUG_OVERRIDES[service.slug]
-    || IMAGE_FOLDER_SLUGS.find((s) => s === service.slug)
-    || IMAGE_FOLDER_SLUGS.find((s) => service.slug.startsWith(s))
-    || service.slug;
+  // Map the raw DB slug to the image-folder slug used in SERVICE_IMAGE_MAP.
+  const imageSlug = resolveImageSlug(service.slug);
 
   return (
     <div className="container section">
@@ -76,6 +55,11 @@ export default function ServiceDetails() {
       {/* 1. Service Header */}
       <div className="mt-4">
         <ServiceHeader service={service} />
+      </div>
+
+      {/* Main service image — same image used on the Services listing card */}
+      <div className="mt-4">
+        <ServiceImage slug={imageSlug} role="card" alt={`${service.name} service illustration`} />
       </div>
 
       {/* 2. Introduction */}
