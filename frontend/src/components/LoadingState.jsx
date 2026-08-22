@@ -1,6 +1,9 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
-export default function LoadingState({ label = 'Loading...' }) {
+export default function LoadingState({ label }) {
+  const { t } = useLanguage();
+  const text = label ?? t('common.loading');
   return (
     <div className="text-center" style={{ padding: '48px 16px', color: 'var(--color-text-muted)' }}>
       <div
@@ -13,7 +16,7 @@ export default function LoadingState({ label = 'Loading...' }) {
           animation: 'dts-spin 0.8s linear infinite',
         }}
       />
-      <p className="mb-0">{label}</p>
+      <p className="mb-0">{text}</p>
       <style>{`@keyframes dts-spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );

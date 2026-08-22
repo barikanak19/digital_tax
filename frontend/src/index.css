@@ -256,3 +256,133 @@ img { max-width: 100%; display: block; }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* ============================================================
+   DARK THEME — overrides CSS custom properties only.
+   Applied via [data-theme="dark"] on <html> by ThemeContext.
+   All components use var(--color-*) so they adapt automatically.
+   Navbar/Footer retain their navy palette (they look great as-is).
+   ============================================================ */
+
+[data-theme="dark"] {
+  /* Page & surface backgrounds */
+  --color-bg:      #0f1f2e;
+  --color-surface: #16293d;
+  --color-border:  #2a3f55;
+
+  /* Text */
+  --color-text-primary:   #e2e8f0;
+  --color-text-secondary: #a0b0c0;
+  --color-text-muted:     #6a7f96;
+
+  /* Accent teal — slightly brighter for dark bg contrast */
+  --color-teal-600: #12a8aa;
+  --color-teal-500: #18bfc1;
+  --color-teal-100: #0f2f30;
+
+  /* Amber — keep warm but readable */
+  --color-amber-500: #e0a040;
+  --color-amber-100: #2a1f08;
+
+  /* Red / Green alerts */
+  --color-red-600:   #e05c52;
+  --color-red-100:   #2a100e;
+  --color-green-600: #3db870;
+  --color-green-100: #0e2518;
+
+  /* Navy shades stay the same — used for Navbar/Footer intentionally */
+  /* --color-navy-* unchanged */
+
+  /* Shadows — slightly stronger on dark */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Headings inherit primary text in dark mode */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5 {
+  color: var(--color-text-primary);
+}
+
+/* Form inputs: white bg becomes dark surface in dark mode */
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-textarea,
+[data-theme="dark"] .form-select {
+  background: #1c3348;
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .form-label {
+  color: var(--color-text-primary);
+}
+
+/* btn-outline: invert for dark bg */
+[data-theme="dark"] .btn-outline {
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+[data-theme="dark"] .btn-outline:hover {
+  background: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+/* Image placeholder: dark teal tint */
+[data-theme="dark"] .image-placeholder {
+  background: linear-gradient(135deg, var(--color-teal-100), #0c2829);
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+/* Alert colours already use vars, but ensure text stays readable */
+[data-theme="dark"] .alert-error   { border-color: #5a1e1a; }
+[data-theme="dark"] .alert-success { border-color: #1a4a2a; }
+[data-theme="dark"] .alert-info    { border-color: #0a2f30; }
+[data-theme="dark"] .alert-warning { border-color: #3a2a08; }
+
+/* Service card image container teal background tint */
+[data-theme="dark"] .service-card-img-wrap {
+  background: var(--color-teal-100) !important;
+}
+
+/* Admin panel content area */
+[data-theme="dark"] .admin-content {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+/* Theme toggle button — sits in Navbar */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid #3d5670;
+  color: #fff;
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.theme-toggle:hover { background: #1e3a52; }
+
+/* Language selector — sits in Navbar */
+.lang-select {
+  background: transparent;
+  border: 1px solid #3d5670;
+  color: #fff;
+  border-radius: var(--radius-sm);
+  padding: 5px 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.lang-select:hover  { background: #1e3a52; }
+.lang-select option { background: #0f2438; color: #fff; }
